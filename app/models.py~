@@ -1,0 +1,13 @@
+from django.db import models
+
+class Project(models.Model):
+	name = models.CharField(max_length=100)
+	description = models.TextField()
+	creator = models.ForeignKey(User)
+	payout = models.IntegerField()
+	attributes = []
+	pass
+
+class User(models.Model):
+	name = models.CharField(max_length=100)
+
