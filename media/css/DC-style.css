@@ -1,0 +1,201 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*Some general rules*/
+body {
+	font-family:Verdana, Geneva, sans-serif;
+	background-image:url(old_mathematics.png);
+}
+
+/*because I'm afraid of h1*/
+.bigtext {
+	font-family:"Arial Black", Gadget, sans-serif;
+	font-size:30px;
+	text-shadow: 0px 2px 0px #FFF;
+}
+
+/*cute little guys*/
+.littlelink {
+	font-size:10px;
+	font-family:Verdana, Geneva, sans-serif;
+}
+
+/*the header bar at the top of every page*/
+.topbar {
+	left:0px;
+	right:0px;
+	top:0px;
+	width:100%;
+	position:absolute;
+	height:50px;
+	background-color:#9CF;
+	padding:15px;
+	background-image:url(60degree_gray.png);
+	-webkit-box-shadow:0px 2px 15px #999;
+	box-shadow:0px 2px 15px #999;
+
+}
+
+
+/*DecisionCandy main title*/
+.bigtext #title {
+	
+}
+
+/*top center of rank pages, says "which one..."*/
+.frontcenter {
+	position:relative;
+	width:100%;
+	text-align:center;
+	top:100px;
+}
+
+#whichone {
+	font-size:26px;
+	color:#999;
+}
+
+/*top center of rank pages, dynamic criteria for decision*/
+#isbest {
+	position:absolute;
+	width:100%; 
+	text-align:center;
+	top:140px;
+	z-index:10;
+}
+
+
+/*general overarching ranking content*/
+.ranking {
+	width:100%;
+	position:absolute;
+	top:200px;
+	
+}
+
+/*where the images go.*/
+.rankbox {
+	max-width:300px;
+	max-height:250px;
+	background-color:#6CF;
+	padding:5px;
+	-moz-box-shadow: 5px 5px 5px #ccc;
+    -webkit-box-shadow: 5px 5px 5px #ccc;
+    box-shadow: 5px 5px 5px #ccc;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px; /* future proofing */
+	position:absolute;
+	top:0px;
+	margin:50px 75px 75px;
+	background-image:url(60degree_gray.png);	
+	
+}
+
+/*the main ranking pictures. */
+
+.rankpic {
+	max-width:300px;
+	max-height:250px;
+}
+
+/*the left rank div*/
+.left {
+	right:50%;	
+}
+
+/*the right rank div*/
+.right {
+	left:50%;
+}
+
+.rankbuttons{
+	position:absoltue;
+	width:100px;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	margin-top:125px;
+	margin-bottom:auto;
+}
+
+#chooseleft {
+	  -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+}
+
+#chooseright {
+	
+}
+
+.indecisive {
+	background-color:#6CF;
+	padding:5px;
+	-moz-box-shadow: 5px 5px 5px #ccc;
+    -webkit-box-shadow: 5px 5px 5px #ccc;
+    box-shadow: 5px 5px 5px #ccc;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px; /* future proofing */
+	background-image:url(60degree_gray.png);
+}
+
+/*everything below the ranking goes here*/
+/**/
+.belowranking {
+	position:absolute;
+	top:500px;
+	width:75%;
+	left:12.5%
+}
+
+/**/
+.rankfeedback {
+	width:50%;
+	margin-left:25%;
+}
+
+/**/
+.projectinfo {
+	
+}
+
+
+/**/
+ #projdescription {
+	
+}
+
+/**/
+.progressbar {
+	text-align:center;
+}
+
+.projchoose {
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+	top:100px;
+	position:relative;
+}
+
+.rankbox.choose {
+	position:relative;
+	margin:25px;
+}
+
+.rankpic.choose {
+	
+}
+
+.footer {
+	width:100%;
+	position:relative;
+	top:50px;
+	margin:20px;
+	text-align:center;
+}
