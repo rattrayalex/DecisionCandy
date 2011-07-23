@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>DecisionCandy Choose Project</title>
-<link rel="stylesheet" type="text/css" href="../css/DC-style.css" />
+<link rel="stylesheet" type="text/css" href="static/DC-style.css" />
 </head>
 
 <body>
