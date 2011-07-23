@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} | Home {% endblock %}
+
+{% block content %}
+<div class="bigtext frontcenter">Truly Yummy Feedback.</div>
+<br />
+<div class="frontcenter">
+    DecisionCandy uses the power of boredom to make sure only the tastiest designs ever see the light of <span title="Or RGB, Pantone, Acrylic, Plastic, Wood, Aluminum, Steel or Whatever">CMYK</span>. 
+    <br /><br />
+    Go ahead and pick a project below to see what it's like.<br />
+</div>
+
+{% include "includes/choicetable.html" %}
+
+{% endblock content %}
