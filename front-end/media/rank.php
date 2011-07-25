@@ -8,10 +8,10 @@
 
 <body>
 <!--just the top bar-->
-<?php include('templates/includes/header.php'); ?>
+<?php include('../templates/includes/header.php'); ?>
 
 <!--The text above the ranking-->
-<?php include('templates/includes/rankingtown.php'); ?>
+<?php include('../templates/includes/rankingtown.php'); ?>
 	
 </body>
 </html>

@@ -8,12 +8,12 @@
 
 <body>
 <!--just the top bar-->
-<?php include('templates/includes/header.php'); ?>
+<?php include('../templates/includes/header.php'); ?>
 <!--where the action is att-->
-<?php include('templates/includes/choicetable.php'); ?>
+<?php include('../templates/includes/choicetable.php'); ?>
 <br />
 
-<?php include('templates/includes/footer.php'); ?> 
+<?php include('../templates/includes/footer.php'); ?> 
 	
 </body>
 </html>

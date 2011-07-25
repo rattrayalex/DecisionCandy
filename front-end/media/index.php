@@ -8,7 +8,7 @@
 
 <body>
 <!--just the top bar-->
-<?php include('templates/includes/header.php'); ?>
+<?php include('../templates/includes/header.php'); ?>
 
 <!--where the action is att-->
 
@@ -20,9 +20,9 @@ Go ahead and pick a project below to see what it's like.<br />
 <small>(Disclaimer: it's like, fun.)</small>
 </div>
 
-<?php include('templates/includes/choicetable.php'); ?>
+<?php include('../templates/includes/choicetable.php'); ?>
 <br />
-<?php include('templates/includes/footer.php'); ?>
+<?php include('../templates/includes/footer.php'); ?>
 	
 </body>
 </html>

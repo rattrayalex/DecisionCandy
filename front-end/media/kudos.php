@@ -8,7 +8,7 @@
 
 <body>
 <!--just the top bar-->
-<?php include('templates/includes/header.php'); ?>
+<?php include('../templates/includes/header.php'); ?>
 
 <!--main content stuff-->
 <div class="bigtext frontcenter"> Thanks for helping out [Creative K]!</div>
