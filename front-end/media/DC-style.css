@@ -4,7 +4,16 @@
 /*Some general rules*/
 body {
 	font-family:Verdana, Geneva, sans-serif;
-	background-image:url(../../images/old_mathematics.png);
+	background-image:url(images/old_mathematics.png);
+}
+
+a {
+	color:#333;
+	text-decoration:none;
+}
+
+a:hover {
+	color:#555;
 }
 
 /*because I'm afraid of h1*/
@@ -30,7 +39,7 @@ body {
 	height:50px;
 	background-color:#9CF;
 	padding:15px;
-	background-image:url(../../images/60degree_gray.png);
+	background-image:url(images/bright_squares.png);
 	-webkit-box-shadow:0px 2px 15px #999;
 	box-shadow:0px 2px 15px #999;
 
@@ -48,6 +57,7 @@ body {
 	width:100%;
 	text-align:center;
 	top:100px;
+	
 }
 
 #whichone {
@@ -57,10 +67,10 @@ body {
 
 /*top center of rank pages, dynamic criteria for decision*/
 #isbest {
-	position:absolute;
+	position:relative;
 	width:100%; 
 	text-align:center;
-	top:140px;
+	top:100px;
 	z-index:10;
 }
 
@@ -68,28 +78,36 @@ body {
 /*general overarching ranking content*/
 .ranking {
 	width:100%;
-	position:absolute;
-	top:200px;
+	position:relative;
+	top:100px;
+	height:350px;
 	
 }
 
 /*where the images go.*/
-.rankbox {
-	max-width:300px;
-	max-height:250px;
+.rankbox, .indecisive {
 	background-color:#6CF;
-	padding:5px;
-	-moz-box-shadow: 5px 5px 5px #ccc;
-    -webkit-box-shadow: 5px 5px 5px #ccc;
-    box-shadow: 5px 5px 5px #ccc;
-	-moz-border-radius: 10px;
+	padding:0px;
+	-moz-box-shadow: 5px 5px 10px #999;
+    -webkit-box-shadow: 5px 5px 10px #999;
+    box-shadow: 5px 5px 10px #999;
+/*	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px; /* future proofing */
 	position:absolute;
+	background-image:url(images/whitey.png);	
+	border: 5px dashed #CCC;
+}
+
+.rankbox {
+	max-width:300px;
+	max-height:250px; 
+	margin: 0px 75px 75px;
 	top:0px;
-	margin:50px 75px 75px;
-	background-image:url(../../images/60degree_gray.png);	
-	
+}
+
+.rankbox:hover, .indecisive:hover {
+	border:dashed 5px #999;
 }
 
 /*the main ranking pictures. */
@@ -97,6 +115,7 @@ body {
 .rankpic {
 	max-width:300px;
 	max-height:250px;
+
 }
 
 /*the left rank div*/
@@ -110,45 +129,21 @@ body {
 }
 
 .rankbuttons{
-	position:absoltue;
+	position:relative;
 	width:100px;
 	margin-left:auto;
 	margin-right:auto;
 	text-align:center;
-	margin-top:125px;
+	margin-top:0px;
 	margin-bottom:auto;
-}
-
-#chooseleft {
-	  -moz-transform: scaleX(-1);
-        -o-transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
-        filter: FlipH;
-        -ms-filter: "FlipH";
-}
-
-#chooseright {
-	
-}
-
-.indecisive {
-	background-color:#6CF;
-	padding:5px;
-	-moz-box-shadow: 5px 5px 5px #ccc;
-    -webkit-box-shadow: 5px 5px 5px #ccc;
-    box-shadow: 5px 5px 5px #ccc;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px; /* future proofing */
-	background-image:url(../../images/60degree_gray.png);
+	top:100px;
 }
 
 /*everything below the ranking goes here*/
 /**/
 .belowranking {
-	position:absolute;
-	top:500px;
+	position:relative;
+	top:0px;
 	width:75%;
 	left:12.5%
 }
@@ -195,8 +190,9 @@ body {
 .footer {
 	width:100%;
 	position:relative;
-	top:50px;
+	top:150px;
 	margin:20px;
+	padding:10px;
 	text-align:center;
 }
 

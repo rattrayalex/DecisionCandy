@@ -1,17 +1,19 @@
 from django.conf.urls.defaults import *
 from DecisionCandy.app.views import index, style, rank, choose, thanks, signin, create_account
+from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+                       (r'/media/(?P<path>.*)$', 'django.views.static.serve',
+                        {'document_root': settings.MEDIA_ROOT}),
                        (r'^$',index),
                        (r'^index/$',index),
-                       (r'/DC-style.css$',style),
-                       (r'/rank/$',rank),
-                       (r'/thanks/$',thanks),
-                       (r'/choose/$',choose),
+                       (r'rank/$',rank),
+                       (r'thanks/$',thanks),
+                       (r'choose/$',choose),
     # Example:
     # (r'^decision_candy/', include('decision_candy.foo.urls')),
 
