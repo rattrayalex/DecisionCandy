@@ -1,0 +1,203 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*Some general rules*/
+body {
+	font-family:Verdana, Geneva, sans-serif;
+	background-image:url(images/old_mathematics.png);
+}
+
+a {
+	color:#333;
+	text-decoration:none;
+}
+
+a:hover {
+	color:#555;
+}
+
+/*because I'm afraid of h1*/
+.bigtext {
+	font-family:"Arial Black", Gadget, sans-serif;
+	font-size:30px;
+	text-shadow: 0px 1px 0px #FFF;
+}
+
+/*cute little guys*/
+.littlelink {
+	font-size:10px;
+	font-family:Verdana, Geneva, sans-serif;
+}
+
+/*the header bar at the top of every page*/
+.topbar {
+	left:0px;
+	right:0px;
+	top:0px;
+	width:100%;
+	position:absolute;
+	height:50px;
+	padding:15px;
+	background-image:url(images/bright_squares.png);
+	-webkit-box-shadow:0px 2px 15px #999;
+	box-shadow:0px 2px 15px #999;
+
+}
+
+
+/*DecisionCandy main title*/
+.bigtext #title {
+	
+}
+
+/*top center of rank pages, says "which one..."*/
+.frontcenter {
+	position:relative;
+	width:100%;
+	text-align:center;
+	top:100px;
+	
+}
+
+#whichone {
+	font-size:26px;
+	color:#999;
+}
+
+/*top center of rank pages, dynamic criteria for decision*/
+#isbest {
+	position:relative;
+	width:100%; 
+	text-align:center;
+	top:100px;
+	z-index:10;
+}
+
+
+/*general overarching ranking content*/
+.ranking {
+	width:100%;
+	position:relative;
+	margin-top:100px;
+	height:300px;
+	
+}
+
+/*where the images go.*/
+.rankbox, .indecisive {
+	padding:0px;
+	-moz-box-shadow: 5px 5px 10px #999;
+    -webkit-box-shadow: 5px 5px 10px #999;
+    box-shadow: 5px 5px 10px #999;
+/*	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px; /* future proofing */
+	position:absolute;
+	background-image:url(images/whitey.png);	
+	border: 5px dashed #CCC;
+}
+
+.rankbox {
+	width:300px;
+	height:250px; 
+	margin: 0px 75px 0px 75px;
+	top:0px;
+	padding:5px;
+	text-align:center;
+	overflow:hidden;
+}
+
+.rankbox:hover, .indecisive:hover {
+	border:dashed 5px #999;
+}
+/* at the top of the choice boxes */
+.choicehead {
+	border-bottom:groove #CCC thin;
+	padding-bottom:0px;
+	text-shadow:#FFF 0px 1px 0px;
+}
+/*the main ranking pictures. */
+
+.rankpic {
+	max-width:300px;
+	max-height:250px;
+	position:relative;
+}
+
+/*the left rank div*/
+.left {
+	right:50%;	
+}
+
+/*the right rank div*/
+.right {
+	left:50%;
+}
+
+.rankbuttons{
+	position:relative;
+	width:100px;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	margin-top:0px;
+	margin-bottom:auto;
+	top:100px;
+}
+
+/*everything below the ranking goes here*/
+/**/
+.belowranking {
+	position:relative;
+
+	width:75%;
+	left:12.5%
+}
+
+/**/
+.rankfeedback {
+	width:50%;
+	margin-left:25%;
+}
+
+/**/
+.projectinfo {
+	
+}
+
+
+/**/
+ #projdescription {
+	
+}
+
+/**/
+.progressbar {
+	text-align:center;
+}
+
+.projchoose {
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+	top:100px;
+	position:relative;
+}
+
+.rankbox.choose {
+	position:relative;
+	margin:25px;
+}
+
+.rankpic.choose {
+}
+
+.footer {
+	width:100%;
+	position:relative;
+	top:150px;
+	margin:20px;
+	padding:10px;
+	text-align:center;
+}
+
