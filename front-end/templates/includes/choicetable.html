@@ -9,7 +9,7 @@
         	<td><a href="/{{ project.name }}/1/rank">
             	<div class="rankbox choose">
                     <div class="choicehead">{{ project.name }}</div>
-                    <img src="/front-end/media/{{ pics.img }}" class="rankpic choose"/>
+                    <img src="/front-end/media/{{ project.images.img|first }}" class="rankpic choose"/>
                 </div>
            </a></td>
          {% if forloop.counter in endrow %}
