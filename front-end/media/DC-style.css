@@ -20,7 +20,7 @@ a:hover {
 .bigtext {
 	font-family:"Arial Black", Gadget, sans-serif;
 	font-size:30px;
-	text-shadow: 0px 2px 0px #FFF;
+	text-shadow: 0px 1px 0px #FFF;
 }
 
 /*cute little guys*/
@@ -37,7 +37,6 @@ a:hover {
 	width:100%;
 	position:absolute;
 	height:50px;
-	background-color:#9CF;
 	padding:15px;
 	background-image:url(images/bright_squares.png);
 	-webkit-box-shadow:0px 2px 15px #999;
@@ -79,14 +78,13 @@ a:hover {
 .ranking {
 	width:100%;
 	position:relative;
-	top:100px;
-	height:350px;
+	margin-top:100px;
+	height:300px;
 	
 }
 
 /*where the images go.*/
 .rankbox, .indecisive {
-	background-color:#6CF;
 	padding:0px;
 	-moz-box-shadow: 5px 5px 10px #999;
     -webkit-box-shadow: 5px 5px 10px #999;
@@ -100,22 +98,30 @@ a:hover {
 }
 
 .rankbox {
-	max-width:300px;
-	max-height:250px; 
-	margin: 0px 75px 75px;
+	width:300px;
+	height:250px; 
+	margin: 0px 75px 0px 75px;
 	top:0px;
+	padding:5px;
+	text-align:center;
+	overflow:hidden;
 }
 
 .rankbox:hover, .indecisive:hover {
 	border:dashed 5px #999;
 }
-
+/* at the top of the choice boxes */
+.choicehead {
+	border-bottom:groove #CCC thin;
+	padding-bottom:0px;
+	text-shadow:#FFF 0px 1px 0px;
+}
 /*the main ranking pictures. */
 
 .rankpic {
 	max-width:300px;
 	max-height:250px;
-
+	position:relative;
 }
 
 /*the left rank div*/
@@ -143,7 +149,7 @@ a:hover {
 /**/
 .belowranking {
 	position:relative;
-	top:0px;
+
 	width:75%;
 	left:12.5%
 }
@@ -184,7 +190,6 @@ a:hover {
 }
 
 .rankpic.choose {
-	
 }
 
 .footer {

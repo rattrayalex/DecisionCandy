@@ -6,90 +6,16 @@
         {% if forloop.counter in startrow %}
         	<tr>
         {% endif %}
-        	<td>
+        	<td><a href="/{{ project.name }}/1/rank">
             	<div class="rankbox choose">
-                     
-                    <a href="{{ project_rankpage }}">
-                    {{ project.name }}
-                    <img src="{{ project_coverpic }}" class="rankpic choose"/>]
-                    </a>                
-                    <!--
-                    <a href="rank.html">
-                    <img src="../images/smushkies 3-11.png" class="rankpic choose"/>]
-                    </a>
-                    -->
+                    <div class="choicehead">{{ project.name }}</div>
+                    <img src="/front-end/media/{{ pics.img }}" class="rankpic choose"/>
                 </div>
-            </td>
-           
+           </a></td>
          {% if forloop.counter in endrow %}
   			</tr>
          {% endif %}
             
    {% endfor %}
-      
-</table>
 
-<!-- 
-<table class="projchoose">
-	<tr>
-    	<td>    
-            <div class="rankbox choose">
-                <a href="../../rank/">
-                <img src="../../front-end/media/images/smushkies 3-11.png" class="rankpic choose"/>]
-                </a>
-            </div>
-
-    
-    	</td><td>
-             <div class="rankbox choose">
-                <a href="../../rank/">
-                <img src="../../front-end/media/images/smushkies 3-11.png" class="rankpic choose"/>]
-                </a>
-            </div>   	
-        </td><td>
-             <div class="rankbox choose">
-                <a href="../../rank/">
-                <img src="../../front-end/media/images/smushkies 3-11.png" class="rankpic choose"/>]
-                </a>
-            </div>       
-	</td></tr><tr>
-    	<td>
-            <div class="rankbox choose">
-                <a href="../../rank/.php">
-                <img src="../../front-end/media/images/smushkies 3-11.png" class="rankpic choose"/>]
-                </a>
-            </div>    
-    	</td><td>
-            <div class="rankbox choose">
-                <a href="../../rank/.php">
-                <img src="../../front-end/media/images/smushkies 3-11.png" class="rankpic choose"/>]
-                </a>
-            </div>    	
-        </td><td>
-            <div class="rankbox choose">
-                <a href="../../rank/.php">
-                <img src="../../front-end/media/images/smushkies 3-11.png" class="rankpic choose"/>]
-                </a>
-            </div>        
-	</td></tr><tr>
-    	<td>
-             <div class="rankbox choose">
-                <a href="../../rank/.php">
-                <img src="../../front-end/media/images/smushkies 3-11.png" class="rankpic choose"/>]
-                </a>
-            </div>   
-    	</td><td>
-            <div class="rankbox choose">
-                <a href="../../rank/.php">
-                <img src="../../front-end/media/images/smushkies 3-11.png" class="rankpic choose"/>]
-                </a>
-            </div>    	
-        </td><td>
-             <div class="rankbox choose">
-                <a href="../../rank/.php">
-                <img src="../../front-end/media/images/smushkies 3-11.png" class="rankpic choose"/>]
-                </a>
-            </div>       
-	</td></tr>
 </table>
--->
