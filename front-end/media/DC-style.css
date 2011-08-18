@@ -107,6 +107,9 @@ a:hover {
 	overflow:hidden;
 }
 
+td .rankbox{
+	padding:auto;
+}
 .rankbox:hover, .indecisive:hover {
 	border:dashed 5px #999;
 }

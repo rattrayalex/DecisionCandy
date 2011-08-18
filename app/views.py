@@ -2,67 +2,54 @@ from django.shortcuts import render_to_response
 from DecisionCandy.app.models import *
 import random
 
-projects = [
-                { 'name':'Smushkies 9', 'rankpage':'../../rank/', 'coverpic':'media/projects/smushkies-9/smushkies-9-02.png' },
-                { 'name':'Smushkies 6', 'rankpage':'../../rank/', 'coverpic':'media/projects/smushkies-6/smushkies 6-01.png' },
-                { 'name':'Bask', 'rankpage':'../../rank/', 'coverpic':'../../front-end/media/projects/bask-4/bask-4-11.png' },
-                { 'name':'Envirostickers', 'rankpage':'../../rank/', 'coverpic':'../../front-end/media/projects/envirostickers/UPSE Stickers-02.png' },
-                { 'name':'Envirostickers 2', 'rankpage':'../../rank/', 'coverpic':'../../front-end/media/projects/envirostickers/UPSE Stickers-02.png' },
-                ]
 projects = Project.objects.all()
 startrows = [1, 4, 7, 10, 13]
 endrows = [3, 6, 9, 12, 15]
-other_stuff = {
-        'left_img':'../../front-end/media/projects/smushkies-9/smushkies-9-03.png',
-        'right_img':'../../front-end/media/projects/smushkies-9/smushkies-9-02.png',
-        'choose_left':'#',
-        'choose_right':'../../thanks/',
-        'choice_none':'../../choose/',
-        'project_name':'Smushkies logo',
-        }
-project_info = {
-                'Project': {'criteria':'reminds you the most of yummy cookies',
-                'more_criteria':'gourmet, classy, appealing',
-                'creator':'Rattray Design Corp',
-                'description':'Smushkies is a wonderful company started by Nicole Noel with the intent to reinvent the cookie.',
-                'reward':'$0'
-                            }        }
-project_info = dict(project_info.items() + other_stuff.items())
-def index(request):
-	#Pass a list of projects, probably via get
-        pics = Image.objects.all().order_by('project__name')[0]
+
+def standard_context():
         projects = Project.objects.all().order_by('name')
 	context = {
                 'project_list': projects,
-                'pics':pics,
                 'startrow':startrows,
                 'endrow':endrows
                 }
+	return context
+
+def index(request):
+	context = standard_context()
 	return render_to_response('index.html', context)
-	pass
 
-def rank(request, project, stage): #(request, project, step)
-	#Pass a splitting attribute, two projects, project name / info,
-	#progress, value, creator name
-        project =  Project.objects.get(name=project)
-        stage = str(stage)
+def choose(request):
+        context = standard_context()
+        return render_to_response('choose.html',context)
+
+def choose_random(iterable):
+        left = random.choice(iterable)
+        right = random.choice(iterable)
+        while left == right:
+                right = random.choice(iterable)
+        return left, right
+
+def rank(request, project_name, stage): 
+        project =  Project.objects.get(name=project_name)
+        images = [image.img for image in project.images.all()]
+        left, right = choose_random(images)
         context = {
                 'Project': project,
-                'progress': stage,
+                'progress': str(stage),
+                'left_img': left,
+                'right_img': right,
+                'next': u'../../%s/rank/' % str(int(stage) + 1)
                 }
-        context = dict(context.items() + other_stuff.items())
         return render_to_response('rank.html',context)
-	pass
 
-def thanks(request, project): #(request, project)
-	#Needs to pass the name
-	project =  Project.objects.get(name=project)
+
+def thanks(request, project_name):
+	project =  Project.objects.get(name=project_name)
         context = {
                 'Project': project,
                 }
-        context = dict(context.items() + other_stuff.items())
 	return render_to_response('thanks.html',context)
-	pass
 
 def signin(request): 
 	pass
@@ -70,31 +57,14 @@ def signin(request):
 def create_account(request):
 	pass
 
-def style(request):
-        return render_to_response('media/DC-style.css')
-
-def choose(request):
-        #Pass a list of projects, probably via get
-        pics = Image.objects.all().order_by('project__name')[0]
-        projects = Project.objects.all().order_by('name')
-	context = {
-                'project_list': projects,
-                'pics':pics,
-                'startrow':startrows,
-                'endrow':endrows
-                }
-        return render_to_response('choose.html',context)
-
-def results(request, project):
-        project = str(project)
-        ilq = Image.objects.filter(project__name=project)
-        ilq = ilq.order_by('-votes_for')
-        project = Project.objects.get(name=project)
+def results(request, project_name):
+        images = list(Image.objects.filter(project__name=project_name))
+        images.sort(key = lambda x: -x.score)
+        project = Project.objects.get(name=project_name)
         context = {
-                'image_list': ilq,
+                'image_list': images,
                 'project': project,
                 'startrow':startrows,
                 'endrow':endrows,
-                
                 }
         return render_to_response('results.html', context)

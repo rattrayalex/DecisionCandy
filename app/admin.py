@@ -1,4 +1,4 @@
-from DecisionCandy.app.models import Image, Project, Client
+from DecisionCandy.app.models import *
 from django.contrib import admin
 
 class ImageAdmin(admin.ModelAdmin):
@@ -7,3 +7,5 @@ class ImageAdmin(admin.ModelAdmin):
 admin.site.register(Image, ImageAdmin)
 admin.site.register(Project)
 admin.site.register(Client)
+admin.site.register(Vote)
+admin.site.register(Minion)

@@ -22,8 +22,12 @@ class Image(models.Model):
     project = models.ForeignKey(Project, related_name='images')
     img = models.ImageField(upload_to='projects')
 
+    @property
+    def score(self):
+        return self.winvotes.count()
+
     def __unicode__(self):
-        return str(self.project) + str(self.id)
+        return str(self.img)
 
 class UserProfile(models.Model):
     name = models.CharField(max_length=150)
@@ -53,7 +57,9 @@ class Vote(models.Model):
     voter = models.ForeignKey(Minion, null=True, blank=True)
     index = models.IntegerField(null=True, blank=True)
     time = models.DateTimeField(default=datetime.datetime.now())
+    winner_comment = models.CharField(max_length=1000, blank=True)
+    loser_comment = models.CharField(max_length=1000, blank=True)
 
     def __unicode__(self):
         return "w: %s, l: %s" % (self.winner, self.loser)
-    
+

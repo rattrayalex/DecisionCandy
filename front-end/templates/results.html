@@ -10,10 +10,9 @@
         {% endif %}
         	<td>
             	<div class="rankbox choose">
-                    <div class="choicehead">{{ image.number }}</div>
                     <img src="front-end/media/{{ image.img }}" class="rankpic choose"/>
-                    <p>Votes for: {{ image.votes_for }}</p>                  
                 </div>
+                <p style="text-align:center;">Votes for: {{ image.winvotes.count }}</p>  
            </td>
          {% if forloop.counter in endrow %}
   			</tr>

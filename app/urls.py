@@ -11,11 +11,10 @@ urlpatterns = patterns('',
                         {'document_root': settings.MEDIA_ROOT}),
                        (r'^$',index),
                        (r'^index/$',index),
-##                       (r'^rank/$',rank),
                        (r'(\w+)/(\d{1,2})/rank/$',rank),
                        (r'(\w+)/thanks/$',thanks),
                        (r'choose/$',choose),
-                       (r'results/(.+)/$',results),
+                       (r'(\w+)/results/$',results),
     # Example:
     # (r'^decision_candy/', include('decision_candy.foo.urls')),
 
