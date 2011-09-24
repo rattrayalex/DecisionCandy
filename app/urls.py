@@ -15,6 +15,7 @@ urlpatterns = patterns('',
                        (r'(\w+)/thanks/$',thanks),
                        (r'choose/$',choose),
                        (r'(\w+)/results/$',results),
+                       (r'(\w+)/rank/xhr/(?P<format>\w+)$',rank_xhr),
     # Example:
     # (r'^decision_candy/', include('decision_candy.foo.urls')),
 
