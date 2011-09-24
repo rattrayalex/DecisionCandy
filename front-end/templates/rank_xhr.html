@@ -1,0 +1,50 @@
+{% extends "base_user.html" %}
+
+{% block title %}{{ block.super }} | Rank {{ project }} {% endblock %}
+
+{% block content %}
+
+    <div class="bigtext frontcenter" id="whichone">Which one...</div>
+        
+        <div class="bigtext" id="isbest" title="{{ Project.more_criteria }}">
+        {{ Project.criteria }}?
+            <div class="littlelink">
+            <a href="#" title="{{ Project.more_criteria }}">
+            more criteria
+            </a></div>
+        </div>
+        
+        <!--where the action is att-->
+        <div class="ranking">
+            <a href="javascript here">
+                <div class="rankbox left">        
+                    <img src="javascript here" class="rankpic"/>
+                </div>
+            </a>
+            <!--in between the versions-->
+            <div class="rankbuttons">
+                <a href="javascript here"><div class="indecisive">Can't decide.</div></a>
+            </div>
+            <a href="javascript here">
+                <div class="rankbox right">
+                    <img src="javascript here" class="rankpic"/>
+                </div>
+            </a>
+        </div>	
+        
+        
+        <!--everything below the ranking goes here -->
+        <div class="belowranking">   
+            <div class="projectinfo">
+                <div class="bigtext">Information about {{ Project.name }}</div>
+                <div id="projdescription"> {{ Project.description }} </div>
+            </div>
+        </div>
+    
+        <div class="progressbar">
+            //Put Javascript here! (to keep track of the progress so far).<br />
+            {% if Project.reward > 0 %}${{ Project.reward }}{% endif %}
+        </div>
+    </div>
+
+{% endblock content %}
