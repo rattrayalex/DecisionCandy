@@ -1,6 +1,0 @@
-<?php
-
-$heading='DecisionCandy';
-
-?>
-

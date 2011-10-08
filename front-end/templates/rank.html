@@ -6,14 +6,18 @@
 <link rel="stylesheet" type="text/css" href="../../front-end/media/css/DC-style.css"/>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
+  var progress = 0;
+
   function updateList(){
+    progress += 1;
     var url = "choices/?project={{Project.name}}";
     $("div#main").load(url);
+    $("div#progress").html(progress);
   }
-  
-  $(document).ready(function() {
-      updateList();
-      });
+
+$(document).ready(function() {
+    updateList();
+    });
 </script>
 {% endblock %}
 
@@ -26,7 +30,8 @@
   <div class="littlelink">
     <a href="#" title="{{ Project.more_criteria }}">
       more criteria
-  </a></div>
+    </a>
+  </div>
 </div>
 
 <div id="main">
@@ -42,8 +47,12 @@
 </div>
 
 <div class="progressbar">
-  {{ progress }}<br />
-  {% if Project.reward > 0 %}${{ Project.reward }}{% endif %}
+  <div id="progress">
+  </div>
+  <br/>
+  {% if Project.reward > 0 %}$
+  {{ Project.reward }}
+  {% endif %}
 </div>
 </div>
 
