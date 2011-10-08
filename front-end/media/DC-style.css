@@ -4,7 +4,7 @@
 /*Some general rules*/
 body {
 	font-family:Verdana, Geneva, sans-serif;
-	background-image:url(images/old_mathematics.png);
+	background-image:url(images/old_mathematics_2.png);
 }
 
 a {
@@ -18,8 +18,8 @@ a:hover {
 
 /*because I'm afraid of h1*/
 .bigtext {
-	font-family:"Arial Black", Gadget, sans-serif;
-	font-size:30px;
+	font-family: 'Copse','Philosopher', "Arial Black", Gadget, sans-serif;
+	font-size:40px;
 	text-shadow: 0px 1px 0px #FFF;
 }
 
@@ -36,8 +36,6 @@ a:hover {
 	top:0px;
 	width:100%;
 	position:absolute;
-	height:50px;
-	padding:15px;
 	background-image:url(images/bright_squares.png);
 	-webkit-box-shadow:0px 2px 15px #999;
 	box-shadow:0px 2px 15px #999;
@@ -87,14 +85,15 @@ a:hover {
 .rankbox, .indecisive {
 	padding:0px;
 	-moz-box-shadow: 5px 5px 10px #999;
-    -webkit-box-shadow: 5px 5px 10px #999;
-    box-shadow: 5px 5px 10px #999;
+        -webkit-box-shadow: 5px 5px 10px #999;
+        box-shadow: 5px 5px 10px #999;
 /*	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px; /* future proofing */
 	position:absolute;
-	background-image:url(images/whitey.png);	
-	border: 5px dashed #CCC;
+        background-color:white;
+	/* background-image:url(images/whitey.png);	*/
+	/* border: 5px dashed #CCC;     */
 }
 
 .rankbox {
@@ -111,7 +110,10 @@ td .rankbox{
 	padding:auto;
 }
 .rankbox:hover, .indecisive:hover {
-	border:dashed 5px #999;
+	/* border:dashed 5px #999;     */
+        -moz-box-shadow: 5px 5px 10px #111;
+        -webkit-box-shadow: 5px 5px 10px #111;
+        box-shadow: 5px 5px 10px #111;
 }
 /* at the top of the choice boxes */
 .choicehead {
@@ -198,9 +200,10 @@ td .rankbox{
 .footer {
 	width:100%;
 	position:relative;
-	top:150px;
-	margin:20px;
-	padding:10px;
+	top:150px; left: 0px; right: 0px;
 	text-align:center;
 }
 
+#title {
+        margin:10px;
+}

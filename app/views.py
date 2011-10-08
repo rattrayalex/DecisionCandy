@@ -3,7 +3,7 @@ from DecisionCandy.app.models import *
 import random
 from django.http import HttpResponse
 from django.core import serializers
-from djang.utils import simplejson
+from django.utils import simplejson
 
 projects = Project.objects.all()
 startrows = [1, 4, 7, 10, 13]
@@ -75,6 +75,10 @@ def thanks(request, project_name):
   return render_to_response('thanks.html',context)
 
 def signin(request): 
+##  if request.method != 'POST':
+##    raise HTTP404('Only POSTs are allowed')
+##  try:
+##    m = 
   pass
 
 def create_account(request):
