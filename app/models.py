@@ -30,6 +30,7 @@ class Image(models.Model):
         return str(self.img)
 
 class UserProfile(models.Model):
+    name = models.CharField(max_length=50)
     user = models.OneToOneField(User, unique=True)
     signup_date = models.DateTimeField(default=datetime.datetime.today())
 
