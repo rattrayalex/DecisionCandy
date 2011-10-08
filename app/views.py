@@ -88,7 +88,8 @@ def thanks(request):
   return render_to_response('thanks.html',context)
 
 
-def results(request, project_name):
+def results(request):
+  project_name = request.GET['project']
   images = list(Image.objects.filter(project__name=project_name))
   images.sort(key = lambda x: -x.score)
   project = Project.objects.get(name=project_name)

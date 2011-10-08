@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     (r'choices/$', choices), 
     (r'choose/$', choose), 
     (r'thanks/$', thanks), 
-    (r'(\w+)/results/$', results), 
+    (r'results/$', results), 
     (r'(\w+)/rank/xhr/(?P<format>\w+)$', rank_xhr), 
 
     (r'^$', index), 
