@@ -26,7 +26,10 @@ def index(request):
 
 
 def choose(request):
-  context = standard_context()
+  projects = Project.objects.all().order_by('name')
+  context = {
+      'project_table': divide(projects, ROW_WIDTH)
+      }
   return render_to_response('choose.html',context)
 
 
