@@ -79,7 +79,8 @@ def rank_xhr(request, project_name, format):
   return render_to_response('rank_xhr.html',context)
 
 
-def thanks(request, project_name):
+def thanks(request):
+  project_name = request.GET['project']
   project =  Project.objects.get(name=project_name)
   context = {
           'Project': project,
