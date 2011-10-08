@@ -7,23 +7,21 @@ from django.utils import simplejson
 
 from DecisionCandy.app.models import *
 
-projects = Project.objects.all()
-startrows = [1, 4, 7, 10, 13]
-endrows = [3, 6, 9, 12, 15]
+
+ROW_WIDTH = 3
 
 
-def standard_context():
-  projects = Project.objects.all().order_by('name')
-  context = {
-    'project_list': projects,
-    'startrow':startrows,
-    'endrow':endrows
-    }
-  return context
+def divide(n, k):
+  '''Divide n into sets of size of k or smaller.'''
+  for i in range(0, len(n), k):
+    yield n[i:i+k]
 
 
 def index(request):
-  context = standard_context()
+  projects = Project.objects.all().order_by('name')
+  context = {
+      'project_table': divide(projects, ROW_WIDTH)
+      }
   return render_to_response('index.html', context)
 
 
@@ -94,10 +92,8 @@ def results(request):
   images.sort(key = lambda x: -x.score)
   project = Project.objects.get(name=project_name)
   context = {
-    'image_list': images,
+    'image_list': divide(images, ROW_WIDTH),
     'project': project,
-    'startrow':startrows,
-    'endrow':endrows,
     }
   return render_to_response('results.html', context)
 
