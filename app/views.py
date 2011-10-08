@@ -1,5 +1,5 @@
 import random
-
+from django import forms
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.core import serializers
@@ -88,12 +88,23 @@ def thanks(request):
           }
   return render_to_response('thanks.html',context)
 
+class SignInForm(forms.Form):
+    email = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput)
+
 def signin(request): 
 ##  if request.method != 'POST':
 ##    raise HTTP404('Only POSTs are allowed')
 ##  try:
 ##    m = 
-  pass
+    if request.method == 'POST':
+        form = SignInForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = SignInForm() 
+
+    return render_to_response('signin.html', {'form': form,})
 
 def results(request):
   project_name = request.GET['project']
