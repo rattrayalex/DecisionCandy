@@ -2,8 +2,49 @@
 
 {% block title %}{{ block.super }} | Rank {{ project }} {% endblock %}
 
+{% block headcode %}
+<link rel="stylesheet" type="text/css" href="../../front-end/media/css/DC-style.css"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+  function updateList(){
+    var url = "choices/?project={{Project.name}}";
+    $("div#main").load(url);
+  }
+  
+  $(document).ready(function() {
+      updateList();
+      });
+</script>
+{% endblock %}
+
 {% block content %}
 
-	{% include "includes/rankingtown.html" %}
+<div class="bigtext frontcenter" id="whichone">Which one...</div>
+
+<div class="bigtext" id="isbest" title="{{ Project.more_criteria }}">
+  {{ Project.criteria }}?
+  <div class="littlelink">
+    <a href="#" title="{{ Project.more_criteria }}">
+      more criteria
+  </a></div>
+</div>
+
+<div id="main">
+</div>
+
+
+<!--everything below the ranking goes here -->
+<div class="belowranking">   
+  <div class="projectinfo">
+    <div class="bigtext">Information about {{ Project.name }}</div>
+    <div id="projdescription"> {{ Project.description }} </div>
+  </div>
+</div>
+
+<div class="progressbar">
+  {{ progress }}<br />
+  {% if Project.reward > 0 %}${{ Project.reward }}{% endif %}
+</div>
+</div>
 
 {% endblock content %}
