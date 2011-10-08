@@ -7,13 +7,14 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    (r'^admin/', include(admin.site.urls)),
     (r'media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-    (r'rank/$', rank), 
+    (r'^rank/$', rank), 
     (r'choices/$', choices), 
-    (r'choose/$', choose), 
-    (r'thanks/$', thanks), 
-    (r'results/$', results), 
-    (r'(\w+)/rank/xhr/(?P<format>\w+)$', rank_xhr), 
-
+    (r'^choose/$', choose), 
+    (r'^thanks/$', thanks), 
+    (r'^results/$', results), 
+    (r'(\w+)/rank/xhr/(?P<format>\w+)$', rank_xhr),
+    (r'^signin/$', signin),
     (r'^$', index), 
     )

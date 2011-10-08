@@ -4,7 +4,7 @@
 /*Some general rules*/
 body {
 	font-family:Verdana, Geneva, sans-serif;
-	background-image:url(images/old_mathematics_2.png);
+	background-image:url(../images/old_mathematics_2.png);
 }
 
 a {
@@ -36,7 +36,7 @@ a:hover {
 	top:0px;
 	width:100%;
 	position:absolute;
-	background-image:url(images/bright_squares.png);
+	background-image:url(../images/bright_squares.png);
 	-webkit-box-shadow:0px 2px 15px #999;
 	box-shadow:0px 2px 15px #999;
 
@@ -50,24 +50,21 @@ a:hover {
 
 /*top center of rank pages, says "which one..."*/
 .frontcenter {
-	position:relative;
 	width:100%;
 	text-align:center;
-	top:100px;
-	
+	position:relative;
 }
 
 #whichone {
 	font-size:26px;
 	color:#999;
+	margin-top:85px;
 }
 
 /*top center of rank pages, dynamic criteria for decision*/
 #isbest {
-	position:relative;
 	width:100%; 
 	text-align:center;
-	top:100px;
 	z-index:10;
 }
 
@@ -76,7 +73,6 @@ a:hover {
 .ranking {
 	width:100%;
 	position:relative;
-	margin-top:100px;
 	height:300px;
 	
 }
@@ -84,9 +80,9 @@ a:hover {
 /*where the images go.*/
 .rankbox, .indecisive {
 	padding:0px;
-	-moz-box-shadow: 5px 5px 10px #999;
-        -webkit-box-shadow: 5px 5px 10px #999;
-        box-shadow: 5px 5px 10px #999;
+	-moz-box-shadow: 0px 0px 10px #8FBCFF;
+    -webkit-box-shadow: 0px 0px 10px #8FBCFF;
+    box-shadow: 0px 0px 10px #8FBCFF;
 /*	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px; /* future proofing */
@@ -111,9 +107,9 @@ td .rankbox{
 }
 .rankbox:hover, .indecisive:hover {
 	/* border:dashed 5px #999;     */
-        -moz-box-shadow: 5px 5px 10px #111;
-        -webkit-box-shadow: 5px 5px 10px #111;
-        box-shadow: 5px 5px 10px #111;
+	-moz-box-shadow: 0px 0px 10px #5EA6FC;
+    -webkit-box-shadow: 0px 0px 10px #5EA6FC;
+    box-shadow: 0px 0px 10px #5EA6FC;
 }
 /* at the top of the choice boxes */
 .choicehead {
@@ -200,10 +196,28 @@ td .rankbox{
 .footer {
 	width:100%;
 	position:relative;
-	top:150px; left: 0px; right: 0px;
+	top:50px; left: 0px; right: 0px;
 	text-align:center;
 }
 
 #title {
         margin:10px;
+}
+
+.bluetext, a {
+	color:#8FBCFF;
+}
+
+.orangetext {
+	color:#FFC04F;
+}
+
+
+.topbar-links {
+	position:absolute;
+	text-align:right;
+	right:0px;
+	top:10px;
+	margin: 15px;
+	width:100px;
 }
