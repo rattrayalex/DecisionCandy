@@ -1,23 +1,22 @@
-{% extends "base_client.html" %}
+{% extends "base.html" %}
 
 {% block title %}Review {{ project.name }} | {{ block.super }}{% endblock %}
 {% block content %}
-	<div class="bigtext frontcenter"> The results so far for {{ project.name }}!</div>
-    <table class="projchoose">
-   {% for image in image_list %}
-        {% if forloop.counter in startrow %}
-        	<tr>
-        {% endif %}
-        	<td>
-            	<div class="rankbox choose">
-                    <img src="front-end/media/{{ image.img }}" class="rankpic choose"/>
-                </div>
-                <p style="text-align:center;">Votes for: {{ image.winvotes.count }}</p>  
-           </td>
-         {% if forloop.counter in endrow %}
-  			</tr>
-         {% endif %}
-   {% endfor %}
-
+<div class="bigtext frontcenter">
+  The results so far for {{ project.name }}!
+</div>
+<table class="projchoose">
+  {% for row in image_list %}
+  <tr>
+    {% for image in row %}
+    <td>
+      <div class="rankbox choose">
+        <img src="front-end/media/{{ image.img }}" class="rankpic choose"/>
+      </div>
+      <p style="text-align:center;">Votes for: {{ image.winvotes.count }}</p>  
+    </td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
 </table>
 {% endblock content %}

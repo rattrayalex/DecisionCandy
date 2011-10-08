@@ -1,21 +1,19 @@
 
 <table class="projchoose">
 
-   {% for project in project_list %}
-        
-        {% if forloop.counter in startrow %}
-        	<tr>
-        {% endif %}
-        	<td><a href="/{{ project.name }}/1/rank">
-            	<div class="rankbox choose">
-                    <div class="choicehead">{{ project.name }}</div>
-                    <img src="/front-end/media/{{ project.images.all|first }}" class="rankpic choose"/>
-                </div>
-           </a></td>
-         {% if forloop.counter in endrow %}
-  			</tr>
-         {% endif %}
-            
-   {% endfor %}
+  {% for row in project_table %}
+  <tr>
+    {% for project  in row %}
+    <td>
+      <a href="/rank/?project={{ project.name }}">
+        <div class="rankbox choose">
+          <div class="choicehead">{{ project.name }}</div>
+          <img src="/front-end/media/{{ project.images.all|first }}" class="rankpic choose"/>
+        </div>
+      </a>
+    </td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
 
 </table>
