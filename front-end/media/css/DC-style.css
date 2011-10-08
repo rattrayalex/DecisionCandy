@@ -3,8 +3,9 @@
 
 /*Some general rules*/
 body {
-	font-family:Verdana, Geneva, sans-serif;
-	background-image:url(../images/old_mathematics_2.png);
+	font-family:'Arvo', Verdana, Geneva, sans-serif;
+	background-image:url(../images/gradient_texture20100901.JPG);
+	background-color:white;
 }
 
 a {
@@ -20,7 +21,7 @@ a:hover {
 .bigtext {
 	font-family: 'Copse','Philosopher', "Arial Black", Gadget, sans-serif;
 	font-size:40px;
-	text-shadow: 0px 1px 0px #FFF;
+	text-shadow: 0px 1px 1px #888;
 }
 
 /*cute little guys*/
@@ -36,7 +37,7 @@ a:hover {
 	top:0px;
 	width:100%;
 	position:absolute;
-	background-image:url(../images/bright_squares.png);
+	background-image:url(../images/old_mathematics_3.png);
 	-webkit-box-shadow:0px 2px 15px #999;
 	box-shadow:0px 2px 15px #999;
 
@@ -53,12 +54,11 @@ a:hover {
 	width:100%;
 	text-align:center;
 	position:relative;
+	margin-top: 100px;
 }
 
 #whichone {
 	font-size:26px;
-	color:#999;
-	margin-top:85px;
 }
 
 /*top center of rank pages, dynamic criteria for decision*/
@@ -181,7 +181,6 @@ td .rankbox{
 	width:80%;
 	margin-left:auto;
 	margin-right:auto;
-	top:100px;
 	position:relative;
 }
 
