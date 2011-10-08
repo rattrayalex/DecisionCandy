@@ -89,22 +89,28 @@ def thanks(request):
   return render_to_response('thanks.html',context)
 
 class SignInForm(forms.Form):
-    email = forms.CharField(max_length=100)
-    password = forms.CharField(widget=forms.PasswordInput)
+  email = forms.CharField(max_length=100)
+  password = forms.CharField(widget=forms.PasswordInput)
 
 def signin(request): 
 ##  if request.method != 'POST':
 ##    raise HTTP404('Only POSTs are allowed')
 ##  try:
 ##    m = 
-    if request.method == 'POST':
-        form = SignInForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect('/thanks/')
-    else:
-        form = SignInForm() 
+  if request.method == 'POST':
+    print "in signin post"
+    form = SignInForm(request.POST)
+    if form.is_valid():
+      return HttpResponseRedirect('/signin/')
+  else:
+    print "in signin else"
+    form = SignInForm() 
+  print "in signin "
+  return render_to_response('signin.html', {'form': form,})
 
-    return render_to_response('signin.html', {'form': form,})
+def loggedin(request):
+  return render_to_response('loggedin.html',{})
+  
 
 def results(request):
   project_name = request.GET['project']
