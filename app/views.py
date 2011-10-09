@@ -137,7 +137,8 @@ def signup(request):
       
       client = Client(name=name, email=email, user=user, description=description)
       client.save()
-      
+      u= auth.authenticate(username=email, password=password)
+      auth.login(request, u)
       return HttpResponseRedirect('/loggedin/')
   else:
     form = SignUpForm()
