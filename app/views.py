@@ -2,9 +2,11 @@ import random
 from django import forms
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.core import serializers
 from django.utils import simplejson
 from django.forms import ModelForm
+from django.template import RequestContext
 
 from DecisionCandy.app.models import *
 
@@ -116,12 +118,18 @@ def signin(request):
     print "in signin post"
     form = SignInForm(request.POST)
     if form.is_valid():
-      return HttpResponseRedirect('/signin/')
+      email = form.cleaned_data['email']
+      password = form.cleaned_data['password']
+      u = User.objects.get(username__exact=email)
+      if u.check_password(password):  
+        return HttpResponseRedirect('/loggedin/')
+      else:
+        return HttpResponseRedirect('/signin/')
   else:
     print "in signin else"
     form = SignInForm() 
   print "in signin "
-  return render_to_response('signin.html', {'form': form,})
+  return render_to_response('signin.html', {'form': form},context_instance=RequestContext(request))
 
 def loggedin(request):
   return render_to_response('loggedin.html',{})
