@@ -24,7 +24,11 @@
                 </div>
             </a>
             <div class="topbar-links bluetext">
-            	<a href="signin/">Log in</a>
+            	{% if user.username %}
+	            	Welcome, {{ user.client.name }} | <a href="../../logout/">Logout</a>
+                	{% else %}
+                    <a href="../../signup/">Sign Up</a> | <a href="../../signin/">Log in</a>
+                {% endif %}
             </div>
         </div>
     {% endblock %}
