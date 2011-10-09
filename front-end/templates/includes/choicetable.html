@@ -5,7 +5,7 @@
   <tr>
     {% for project  in row %}
     <td>
-      <a href="/rank/?project={{ project.name }}">
+      <a href="/rank/{{ project.name }}">
         <div class="rankbox choose">
           <div class="choicehead">{{ project.name }}</div>
           <img src="/front-end/media/{{ project.images.all|first }}" class="rankpic choose"/>

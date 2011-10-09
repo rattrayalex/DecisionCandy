@@ -10,6 +10,7 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.forms.formsets import formset_factory
+import datetime
 
 from DecisionCandy.app.models import *
 
@@ -41,21 +42,8 @@ def choose(request):
   return render_to_response('choose.html',context)
 
 
-def choices(request):
-  project =  Project.objects.get(name=request.GET['project'])
-  images = [image.img for image in project.images.all()]
-  left, right = random.sample(images, 2)
-  context = {
-    'Project': project,
-    'left_img': left,
-    'right_img': right,
-    'user': request.user,
-    }
-  return render_to_response('choices.html', context)
-
-
-def rank(request): 
-  project_name = request.GET['project']
+def choices(request, project):
+  project_name = str(project).replace('%20',' ')
   project =  Project.objects.get(name=project_name)
   images = [image.img for image in project.images.all()]
   left, right = random.sample(images, 2)
@@ -65,7 +53,21 @@ def rank(request):
     'right_img': right,
     'user': request.user,
     }
-  return render_to_response('rank.html',context)
+  return render_to_response('choices.html', context, context_instance = RequestContext(request))
+
+
+def rank(request, project): 
+  project_name = str(project)
+  project =  Project.objects.get(name=project_name)
+  images = [image.img for image in project.images.all()]
+  left, right = random.sample(images, 2)
+  context = {
+    'Project': project,
+    'left_img': left,
+    'right_img': right,
+    'user': request.user,
+    }
+  return render_to_response('rank.html',context, context_instance = RequestContext(request))
 
 
 def rank_xhr(request, project_name, format):
@@ -89,9 +91,20 @@ def rank_xhr(request, project_name, format):
     }
   return render_to_response('rank_xhr.html',context)
 
+def vote(request, winner, loser):
+  print "in vote method"
+  winner = str(winner).replace('___', '.')
+  loser = str(loser).replace('___', '.')
+  vote = Vote(
+    winner = str(winner),
+    loser = str(loser),
+    time = datetime.datetime.now()
+    )
+  vote.save()
+  return render_to_response('voted', {}, context_instance = RequestContext(request))
 
-def thanks(request):
-  project_name = request.GET['project']
+def thanks(request, project):
+  project_name = str(project)#.replace('%20', ' ')
   project =  Project.objects.get(name=project_name)
   context = {
           'Project': project,
@@ -143,17 +156,41 @@ class create_project(forms.Form):
   description = forms.CharField(widget=forms.Textarea, label="A description of your project")
   criteria = forms.CharField(max_length=100, label="Criteria (Which one ___?)")
   more_criteria = forms.CharField(widget=forms.Textarea, label="More Criteria (what else is important?)")
-    
+
+class upload_image_form(forms.Form):
+  filename = forms.ImageField()#upload_to='user_files')
+##  for form in formset.forms:
+##      form.save()
+  
 def upload_files(request):
+  UploaderFormset = formset_factory(upload_image_form, extra=9)
   if request.method == 'POST':
+    image_form = UploaderFormset(request.POST, request.FILES)
     project_form = create_project(request.POST)
-    image_form = upload_image_form(request.POST)
-    if form.is_valid():
-      new_project = project_form.save()
-      new_iamge = image_form.save()
+##    image_form = upload_image_form(request.POST)
+    if image_form.is_valid() and project_form.is_valid():
+      if len(image_form) < 2:
+        return HttpResponse('Upload more pix!')
+      new_project = Project(
+        name=project_form.cleaned_data['name'],
+        description=project_form.cleaned_data['description'],
+        creator = request.user.client,
+        reward = 0,
+        criteria = project_form.cleaned_data['criteria'],
+        more_criteria = project_form.cleaned_data['more_criteria']
+        )
+      new_project.save()
+      n = 0
+      for image in request.FILES:
+        datapoint = 'form-%s-filename' % str(n)
+        i = Image(project=Project.objects.get(name=project_form.cleaned_data['name']),
+                  img = request.FILES[datapoint])
+        i.save()
+        n += 1
   else:
       project_form = create_project()
-      image_form = upload_image_form()
+##      image_form = upload_image_form()
+      image_form = UploaderFormset()
   context = {
     'project_form': project_form,
     'image_form': image_form,
@@ -192,8 +229,8 @@ def logout(request):
   auth.logout(request)
   return HttpResponseRedirect('/')
 
-def results(request):
-  project_name = request.GET['project']
+def results(request, project):
+  project_name = str(project)
   images = list(Image.objects.filter(project__name=project_name))
   images.sort(key = lambda x: -x.score)
   project = Project.objects.get(name=project_name)
@@ -204,17 +241,3 @@ def results(request):
     }
   return render_to_response('results.html', context)
 
-class UploaderForm(forms.Form):
-  pass
-##  file1 = forms.FileField(upload_to='user_files')
-##
-##
-##  UploaderFormset = formset_factory(UploaderForm)
-##
-##  # long as you specify 'form-TOTAL_FORMS' and 2 other fields listed in the docs,
-##  # the formset will auto generate form instances & populate with fields based on
-##  # their 0 index.
-##  formset = UploaderFormset(request.POST)
-##
-##  for form in formset.forms:
-##      form.save()

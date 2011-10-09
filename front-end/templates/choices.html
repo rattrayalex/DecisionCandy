@@ -1,7 +1,7 @@
 <div class="ranking">
-    <a href="#">
+    <a href="#" onclick="vote('{{ left_img }}', '{{ right_img }}')">{% csrf_token %}
       <div class="rankbox left">        
-        <img src='front-end/media/{{ left_img }}' class="rankpic"/ onclick="updateList()">
+        <img src='front-end/media/{{ left_img }}' class="rankpic"/>
       </div>
     </a>
     <a href="#">
@@ -9,9 +9,13 @@
           <div class="indecisive">Can't decide.</div>
         </div>
     </a>
-    <a href="#">
+    <a href="#" onclick="vote('{{ right_img }}', '{{ left_img }}')">{% csrf_token %}
         <div class="rankbox right">
-          <img src='front-end/media/{{ right_img }}' class="rankpic"/ onclick="updateList()">
+          <img src='front-end/media/{{ right_img }}' class="rankpic"/>
         </div>
     </a>
+</div>
+
+<div id="fake">
+
 </div>

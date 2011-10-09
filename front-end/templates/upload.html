@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="frontcenter">
-        <form action="/upload/" method="post">{% csrf_token %}
+        <form action="/upload/" method="post" enctype="multipart/form-data">{% csrf_token %}
         {{ project_form.as_p }}
         {{ image_form.as_p }}
         <input type="submit" value="Submit" />

@@ -6,17 +6,33 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
   var progress = 0;
-
+  var project = "{{ Project.name|escapejs }}";
+  
+  function vote(w, l){
+	  w = w.replace('.', '___');
+	  l = l.replace('.', '___');
+	  var url = "/vote/w/" + w + "/l/" + l + "/";
+	  alert(url)
+	  $.post(url);
+//	  $.ajax({
+//                data: {
+//                    somedata: 'somedata',
+//                    moredata: 'moredata',
+//                    csrfmiddlewaretoken: '{{ csrf_token }}'
+//                },
+	  updateList();
+  }
+  
   function updateList(){
     if (progress < 10) {
       progress += 1;
-      var url = "choices/?project={{Project.name}}";
+      var url = "../../../choices/" + project.replace(' ','%20');
       $("div#main").load(url);
       $("div#progress").html(progress);
     }
     else {
-      var url = "thanks/?project={{Project.name}}";
-      $("div#content").load(url);
+      var url = "../../../thanks/"+ project.replace(' ','%20');
+      $('div#content').load(url);
     }
   }
 

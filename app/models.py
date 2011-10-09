@@ -60,7 +60,7 @@ class Minion(UserProfile):
 class Vote(models.Model):
     winner = models.ForeignKey(Image, related_name='winvotes')
     loser = models.ForeignKey(Image, related_name='losevotes')
-    voter = models.ForeignKey(Minion, null=True, blank=True)
+    voter = models.ForeignKey(Minion, null=True, blank=True) # change to User?
     index = models.IntegerField(null=True, blank=True)
     time = models.DateTimeField(default=datetime.datetime.now())
     winner_comment = models.CharField(max_length=1000, blank=True)
