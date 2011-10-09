@@ -18,5 +18,7 @@ urlpatterns = patterns('',
     (r'^signin/$', signin),
     (r'^signup/$', signup),
     (r'^$', index), 
-    (r'^loggedin/$', loggedin)
+    (r'^loggedin/$', loggedin),
+    (r'^logout/$', logout),
+    (r'^upload/$', upload_files)
     )

@@ -8,6 +8,8 @@ from django.utils import simplejson
 from django.forms import ModelForm
 from django.template import RequestContext
 from django.contrib.auth.models import User
+from django.contrib import auth
+from django.forms.formsets import formset_factory
 
 from DecisionCandy.app.models import *
 
@@ -24,7 +26,8 @@ def divide(n, k):
 def index(request):
   projects = Project.objects.all().order_by('name')
   context = {
-      'project_table': divide(projects, ROW_WIDTH)
+      'project_table': divide(projects, ROW_WIDTH),
+      'user': request.user,
       }
   return render_to_response('index.html', context)
 
@@ -32,7 +35,8 @@ def index(request):
 def choose(request):
   projects = Project.objects.all().order_by('name')
   context = {
-      'project_table': divide(projects, ROW_WIDTH)
+      'project_table': divide(projects, ROW_WIDTH),
+      'user': request.user,
       }
   return render_to_response('choose.html',context)
 
@@ -45,6 +49,7 @@ def choices(request):
     'Project': project,
     'left_img': left,
     'right_img': right,
+    'user': request.user,
     }
   return render_to_response('choices.html', context)
 
@@ -58,6 +63,7 @@ def rank(request):
     'Project': project,
     'left_img': left,
     'right_img': right,
+    'user': request.user,
     }
   return render_to_response('rank.html',context)
 
@@ -89,6 +95,7 @@ def thanks(request):
   project =  Project.objects.get(name=project_name)
   context = {
           'Project': project,
+          'user': request.user,
           }
   return render_to_response('thanks.html',context)
 
@@ -117,28 +124,57 @@ def signup(request):
       
       client = Client(name=name, email=email, user=user, description=description)
       client.save()
+      
       return HttpResponseRedirect('/loggedin/')
   else:
     form = SignUpForm()
   return render_to_response('signup.html', {'form':form,}, context_instance = RequestContext(request))
+
+##class create_project(ModelForm):
+##  class Meta:
+##    model = Project
+##
+##class upload_image_form(ModelForm):
+##  class Meta:
+##    model = Image
+
+class create_project(forms.Form):
+  name = forms.CharField(max_length=100, label="Project Name")
+  description = forms.CharField(widget=forms.Textarea, label="A description of your project")
+  criteria = forms.CharField(max_length=100, label="Criteria (Which one ___?)")
+  more_criteria = forms.CharField(widget=forms.Textarea, label="More Criteria (what else is important?)")
+    
+def upload_files(request):
+  if request.method == 'POST':
+    project_form = create_project(request.POST)
+    image_form = upload_image_form(request.POST)
+    if form.is_valid():
+      new_project = project_form.save()
+      new_iamge = image_form.save()
+  else:
+      project_form = create_project()
+      image_form = upload_image_form()
+  context = {
+    'project_form': project_form,
+    'image_form': image_form,
+    'user': request.user,
+    }
+  return render_to_response('upload.html', context, context_instance = RequestContext(request))
 
 class SignInForm(forms.Form):
   email = forms.CharField(max_length=100)
   password = forms.CharField(widget=forms.PasswordInput)
 
 def signin(request): 
-##  if request.method != 'POST':
-##    raise HTTP404('Only POSTs are allowed')
-##  try:
-##    m = 
   if request.method == 'POST':
     print "in signin post"
     form = SignInForm(request.POST)
     if form.is_valid():
       email = form.cleaned_data['email']
       password = form.cleaned_data['password']
-      u = User.objects.get(username__exact=email)
-      if u.check_password(password):  
+      user = auth.authenticate(username=email, password=password)
+      if user is not None:
+        auth.login(request, user)
         return HttpResponseRedirect('/loggedin/')
       else:
         return HttpResponseRedirect('/signin/')
@@ -146,11 +182,15 @@ def signin(request):
     print "in signin else"
     form = SignInForm() 
   print "in signin "
-  return render_to_response('signin.html', {'form': form},context_instance=RequestContext(request))
+  return render_to_response('signin.html', {'form': form, 'user': request.user,},context_instance=RequestContext(request))
 
 def loggedin(request):
-  return render_to_response('loggedin.html',{})
-  
+  username = request.user.username
+  return render_to_response('loggedin.html',{'username':username, 'user': request.user,})
+
+def logout(request):
+  auth.logout(request)
+  return HttpResponseRedirect('/')
 
 def results(request):
   project_name = request.GET['project']
@@ -160,8 +200,21 @@ def results(request):
   context = {
     'image_list': divide(images, ROW_WIDTH),
     'project': project,
+    'user': request.user,
     }
   return render_to_response('results.html', context)
 
-def create_account(request):
+class UploaderForm(forms.Form):
   pass
+##  file1 = forms.FileField(upload_to='user_files')
+##
+##
+##  UploaderFormset = formset_factory(UploaderForm)
+##
+##  # long as you specify 'form-TOTAL_FORMS' and 2 other fields listed in the docs,
+##  # the formset will auto generate form instances & populate with fields based on
+##  # their 0 index.
+##  formset = UploaderFormset(request.POST)
+##
+##  for form in formset.forms:
+##      form.save()

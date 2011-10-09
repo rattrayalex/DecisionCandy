@@ -4,7 +4,7 @@
 /*Some general rules*/
 body {
 	font-family:'Arvo', Verdana, Geneva, sans-serif;
-	background-image:url(../images/gradient_texture20100901.JPG);
+	background-image:url(../images/gradient_texture20100901.JPG); background-repeat:repeat-x;
 	background-color:white;
 }
 
@@ -218,5 +218,4 @@ td .rankbox{
 	right:0px;
 	top:10px;
 	margin: 15px;
-	width:100px;
-}
+	}
