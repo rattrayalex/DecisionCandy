@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.core import serializers
 from django.utils import simplejson
+from django.forms import ModelForm
 
 from DecisionCandy.app.models import *
 
@@ -87,6 +88,20 @@ def thanks(request):
           'Project': project,
           }
   return render_to_response('thanks.html',context)
+
+class SignUpFormAgain(ModelForm):
+    class Meta:
+        model = Client
+
+def SignUpForm(request):
+  if request.method == 'POST':
+    form = SignUpFormAgain(request.POST)
+    if form.is_valid():
+      return HttpREsponseRedirect('/loggedin/')
+  else:
+    form = SignUpFormAgain()
+  return render_to_response('signup.html', {'form':form,})
+
 
 class SignInForm(forms.Form):
   email = forms.CharField(max_length=100)
