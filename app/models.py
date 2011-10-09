@@ -32,6 +32,7 @@ class Image(models.Model):
 
 class UserProfile(models.Model):
     name = models.CharField(max_length=50)
+    email = models.EmailField()
     user = models.OneToOneField(User, unique=True)
     signup_date = models.DateTimeField(default=datetime.datetime.today())
 
@@ -43,13 +44,12 @@ class UserProfile(models.Model):
 
 class Client(UserProfile):
     description = models.TextField()
-    
-    def create_client_profile(sender, instance, created, **kwargs):
-      if created:
-        Client.objects.create(user=instance)
-
-    post_save.connect(create_user_profile, sender=User)
-
+##    def create_client_profile(sender, instance, created, **kwargs):
+##      if created:
+##        Client.objects.create(user=instance)
+##
+##    post_save.connect(create_client_profile, sender=User)
+##    
 class Minion(UserProfile):
     gender = models.CharField(max_length=1,choices=gender_choices)
     age = models.PositiveIntegerField(blank=True, null=True)

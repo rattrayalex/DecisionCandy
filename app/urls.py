@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     (r'^results/$', results), 
     (r'(\w+)/rank/xhr/(?P<format>\w+)$', rank_xhr),
     (r'^signin/$', signin),
+    (r'^signup/$', signup),
     (r'^$', index), 
     (r'^loggedin/$', loggedin)
     )

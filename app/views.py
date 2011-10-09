@@ -7,6 +7,7 @@ from django.core import serializers
 from django.utils import simplejson
 from django.forms import ModelForm
 from django.template import RequestContext
+from django.contrib.auth.models import User
 
 from DecisionCandy.app.models import *
 
@@ -95,15 +96,31 @@ class SignUpFormAgain(ModelForm):
     class Meta:
         model = Client
 
-def SignUpForm(request):
+class SignUpForm(forms.Form):
+  email = forms.EmailField(max_length=30)
+  password = forms.CharField(widget=forms.PasswordInput, label="Your Password")
+  name = forms.CharField(max_length=50, label="Publicly visible name")
+  description = forms.CharField(widget=forms.Textarea)
+  
+def signup(request):
   if request.method == 'POST':
-    form = SignUpFormAgain(request.POST)
+    form = SignUpForm(request.POST)
     if form.is_valid():
-      return HttpREsponseRedirect('/loggedin/')
-  else:
-    form = SignUpFormAgain()
-  return render_to_response('signup.html', {'form':form,})
+      email = form.cleaned_data['email']
+      password = form.cleaned_data['password']
+      username = email
+      name = form.cleaned_data['name']
+      description = form.cleaned_data['description']
 
+      user = User.objects.create_user(username, email, password)
+      user.save()
+      
+      client = Client(name=name, email=email, user=user, description=description)
+      client.save()
+      return HttpResponseRedirect('/loggedin/')
+  else:
+    form = SignUpForm()
+  return render_to_response('signup.html', {'form':form,}, context_instance = RequestContext(request))
 
 class SignInForm(forms.Form):
   email = forms.CharField(max_length=100)
