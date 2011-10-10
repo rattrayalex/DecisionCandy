@@ -149,6 +149,9 @@ def signup(request):
       client = Client(name=name, email=email, user=user, description=description)
       client.save()
       
+      user = auth.authenticate(username=email, password=password)
+      if user is not None:
+        auth.login(request, user)
       return HttpResponseRedirect('/loggedin/')
   else:
     form = SignUpForm()
@@ -174,30 +177,34 @@ class upload_image_form(forms.Form):
 ##      form.save()
   
 def upload_files(request):
-  UploaderFormset = formset_factory(upload_image_form, extra=9)
+  UploaderFormset = formset_factory(upload_image_form, extra=10)
   if request.method == 'POST':
     image_form = UploaderFormset(request.POST, request.FILES)
     project_form = create_project(request.POST)
+    print len(request.FILES)
 ##    image_form = upload_image_form(request.POST)
     if image_form.is_valid() and project_form.is_valid():
-      if len(image_form) < 2:
+      if len(request.FILES) < 2:
         return HttpResponse('Upload more pix!')
-      new_project = Project(
-        name=project_form.cleaned_data['name'],
-        description=project_form.cleaned_data['description'],
-        creator = request.user.client,
-        reward = 0,
-        criteria = project_form.cleaned_data['criteria'],
-        more_criteria = project_form.cleaned_data['more_criteria']
-        )
-      new_project.save()
-      n = 0
-      for image in request.FILES:
-        datapoint = 'form-%s-filename' % str(n)
-        i = Image(project=Project.objects.get(name=project_form.cleaned_data['name']),
-                  img = request.FILES[datapoint])
-        i.save()
-        n += 1
+      else:
+        new_project = Project(
+          name=project_form.cleaned_data['name'],
+          description=project_form.cleaned_data['description'],
+          creator = request.user.client,
+          reward = 0,
+          criteria = project_form.cleaned_data['criteria'],
+          more_criteria = project_form.cleaned_data['more_criteria']
+          )
+        new_project.save()
+        n = 0
+        project = Project.objects.get(name=project_form.cleaned_data['name'])
+        for image in request.FILES:
+          datapoint = 'form-%s-filename' % str(n)
+          i = Image(project=project,
+                    img = request.FILES[datapoint])
+          i.save()
+          n += 1
+        return HttpResponseRedirect('../rank/'+ project.name.replace(' ', '%20'))
   else:
       project_form = create_project()
 ##      image_form = upload_image_form()
@@ -233,7 +240,7 @@ def signin(request):
   return render_to_response('signin.html', {'form': form, 'user': request.user,},context_instance=RequestContext(request))
 
 def loggedin(request):
-  username = request.user.username
+  username = request.user.client.name
   return render_to_response('loggedin.html',{'username':username, 'user': request.user,})
 
 def logout(request):
