@@ -5,9 +5,13 @@
 
 {% block content %}
     <div class="frontcenter">
+    <div class="bigtext">Create a Project and upload images below. </div>
+    <br />
         <form action="/upload/" method="post" enctype="multipart/form-data">{% csrf_token %}
-        {{ project_form.as_p }}
-        {{ image_form.as_p }}
+        <table>
+        {{ project_form.as_table }}
+        {{ image_form.as_table }}
+        </table>
         <input type="submit" value="Submit" />
         </form>
     <div>

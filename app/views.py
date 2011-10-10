@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.forms.formsets import formset_factory
 import datetime
+from operator import mul
 
 from DecisionCandy.app.models import *
 
@@ -22,7 +23,6 @@ def divide(n, k):
   '''Divide n into sets of size of k or smaller.'''
   for i in range(0, len(n), k):
     yield n[i:i+k]
-
 
 def index(request):
   projects = Project.objects.all().order_by('name')
@@ -41,8 +41,9 @@ def choose(request):
       }
   return render_to_response('choose.html',context)
 
-
 def choices(request, project):
+##  if request.method == 'POST':
+##    vote(request)
   project_name = str(project).replace('%20',' ')
   project =  Project.objects.get(name=project_name)
   images = [image.img for image in project.images.all()]
@@ -61,47 +62,41 @@ def rank(request, project):
   project =  Project.objects.get(name=project_name)
   images = [image.img for image in project.images.all()]
   left, right = random.sample(images, 2)
+  n = len(images)
+  k = 2
+  nCr = lambda n,k: int(round(
+    reduce(mul, (float(n-i)/(i+1) for i in range(k)), 1)
+    ))
+  max_limit = 10
+  limit = min(nCr(n,k), max_limit)
+  print limit
   context = {
     'Project': project,
     'left_img': left,
     'right_img': right,
+    'limit': limit,
     'user': request.user,
     }
   return render_to_response('rank.html',context, context_instance = RequestContext(request))
 
 
-def rank_xhr(request, project_name, format):
-  project = Project.objects.get(name=project_name)
-  images = [image.img for image in project.images.all()]
-
-  if request.is_ajax():
-    if format == 'xml':
-            mimetype = 'application/xml'
-    elif format == 'json':
-            mimetype = 'application/javascript'
-    left, right = random.sample(images, 2)
-    json_dict = {
-      'left':left,
-      'right':right
-      }
-    json_dump = simplejson.dumps(json_dict)
-    return HttpResponse(json_dump, mimetype)       
-  context = {
-    'Project': project
-    }
-  return render_to_response('rank_xhr.html',context)
-
-def vote(request, winner, loser):
+def vote(request):
   print "in vote method"
-  winner = str(winner).replace('___', '.')
-  loser = str(loser).replace('___', '.')
-  vote = Vote(
-    winner = str(winner),
-    loser = str(loser),
+  if request.method == 'POST':
+    data = request.POST
+    print data
+    w = Image.objects.get(img__exact=data['winner'])
+    l = Image.objects.get(img__exact=data['loser'])
+    print w, l
+    vote = Vote(
+    winner = w,
+    loser = l,
     time = datetime.datetime.now()
     )
+  print "moo"
   vote.save()
-  return render_to_response('voted', {}, context_instance = RequestContext(request))
+
+  return HttpResponse()
 
 def thanks(request, project):
   project_name = str(project)#.replace('%20', ' ')
@@ -137,8 +132,7 @@ def signup(request):
       
       client = Client(name=name, email=email, user=user, description=description)
       client.save()
-      u= auth.authenticate(username=email, password=password)
-      auth.login(request, u)
+      
       return HttpResponseRedirect('/loggedin/')
   else:
     form = SignUpForm()
@@ -159,7 +153,7 @@ class create_project(forms.Form):
   more_criteria = forms.CharField(widget=forms.Textarea, label="More Criteria (what else is important?)")
 
 class upload_image_form(forms.Form):
-  filename = forms.ImageField()#upload_to='user_files')
+  filename = forms.ImageField(label = "Image")#upload_to='user_files')
 ##  for form in formset.forms:
 ##      form.save()
   

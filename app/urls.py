@@ -14,12 +14,11 @@ urlpatterns = patterns('',
     (r'^choose/$', choose), 
     (r'^thanks/(.+)/$', thanks), 
     (r'^results/(.+)/$', results), 
-    (r'(\w+)/rank/xhr/(?P<format>\w+)$', rank_xhr),
     (r'^signin/$', signin),
     (r'^signup/$', signup),
     (r'^$', index), 
     (r'^loggedin/$', loggedin),
     (r'^logout/$', logout),
     (r'^upload/$', upload_files),
-    (r'vote/w/(.+)/l/(.+)/$', vote)
+    (r'vote/$', vote)
     )

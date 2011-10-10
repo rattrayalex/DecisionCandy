@@ -25,7 +25,7 @@
             </a>
             <div class="topbar-links bluetext">
             	{% if user.username %}
-	            	Welcome, {{ user.client.name }} | <a href="../../logout/">Logout</a>
+	            	Welcome, {{ user.client.name }} | <a href="../../upload/">Upload a Project</a> | <a href="../../logout/">Logout</a>
                 	{% else %}
                     <a href="../../signup/">Sign Up</a> | <a href="../../signin/">Log in</a>
                 {% endif %}
@@ -40,7 +40,7 @@
 
 	<div class="footer">    
         {% block footer %}
-        	Copyright 2011 Alex Rattray and Ceasar Bautista. 
+        	<small>Copyright 2011 Alex Rattray, Greg Terrono, and Ceasar Bautista. </small>
         {% endblock %}
     </div>
 

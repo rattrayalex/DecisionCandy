@@ -4,31 +4,48 @@
 
 {% block headcode %}
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../front-end/media/static/ajax-thing.js"></script>
 <script type="text/javascript">
   var progress = 0;
   var project = "{{ Project.name|escapejs }}";
   
+  var limit = '{{ limit }}';
   function vote(w, l){
-	  w = w.replace('.', '___');
-	  l = l.replace('.', '___');
-	  var url = "/vote/w/" + w + "/l/" + l + "/";
-	  alert(url)
-	  $.post(url);
-//	  $.ajax({
-//                data: {
-//                    somedata: 'somedata',
-//                    moredata: 'moredata',
-//                    csrfmiddlewaretoken: '{{ csrf_token }}'
-//                },
-	  updateList();
+	  var url = "/vote/";
+	  var message = new Object();
+	  message.winner = w;
+	  message.loser = l;
+	  $.post(url, {
+		  winner: w, 
+		  loser: l
+	  	},
+		function(data, status, xhr){
+			if (status == 'success'){
+				updateList('y');
+			}
+			else { 
+				alert("something went wrong");
+			}
+		}
+		);
+
+	  //updateList('y');
   }
   
-  function updateList(){
-    if (progress < 10) {
-      progress += 1;
-      var url = "../../../choices/" + project.replace(' ','%20');
-      $("div#main").load(url);
-      $("div#progress").html(progress);
+//  var pairs = new Array(limit);
+//  
+//  function isNewPair(l, r){
+//	  
+//  }
+  
+  function updateList(q){
+    if (progress < limit) {
+		if (q != 'n') {
+		  progress += 1;
+		}
+		  var url = "../../../choices/" + project.replace(' ','%20');
+		  $("div#main").load(url);
+		  $("div#progress").html(progress + " / " + limit);	  
     }
     else {
       var url = "../../../thanks/"+ project.replace(' ','%20');
@@ -37,7 +54,12 @@
   }
 
 $(document).ready(function() {
-    updateList();
+//	for (i=0; i < limit; i++) {
+//	  pairs[i] = new Array(2);
+//	  pairs[i][0]="";
+//	  pairs[i][1]="";
+//	  }
+    updateList('y');
     });
   </script>
   {% endblock %}
@@ -49,9 +71,17 @@ $(document).ready(function() {
   <div class="bigtext orangetext" id="isbest" title="{{ Project.more_criteria }}">
     {{ Project.criteria }}?
     <div class="littlelink">
-      <a href="#" title="{{ Project.more_criteria }}">
-        more criteria
-      </a>
+      <span class="bluetext" title="{{ Project.more_criteria }}">
+        hover for more criteria
+      </span>
+        <div class="progressbar">
+            <div id="progress">
+            </div>
+            <br/>
+            {% if Project.reward > 0 %}$
+            {{ Project.reward }}
+            {% endif %}
+        </div>
     </div>
   </div>
 
@@ -67,14 +97,7 @@ $(document).ready(function() {
     </div>
   </div>
 
-  <div class="progressbar">
-    <div id="progress">
-    </div>
-    <br/>
-    {% if Project.reward > 0 %}$
-    {{ Project.reward }}
-    {% endif %}
-  </div>
+  
 </div>
 
 {% endblock content %}
