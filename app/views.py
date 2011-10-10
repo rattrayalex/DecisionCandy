@@ -33,35 +33,40 @@ def index(request):
   return render_to_response('index.html', context)
 
 
-def choose(request):
-  projects = Project.objects.all().order_by('name')
-  context = {
-      'project_table': divide(projects, ROW_WIDTH),
-      'user': request.user,
-      }
-  return render_to_response('choose.html',context)
+##def choose(request):
+##  projects = Project.objects.all().order_by('name')
+##  context = {
+##      'project_table': divide(projects, ROW_WIDTH),
+##      'user': request.user,
+##      }
+##  return render_to_response('choose.html',context)
 
-def choices(request, project):
-##  if request.method == 'POST':
-##    vote(request)
-  project_name = str(project).replace('%20',' ')
-  project =  Project.objects.get(name=project_name)
-  images = [image.img for image in project.images.all()]
-  left, right = random.sample(images, 2)
-  context = {
-    'Project': project,
-    'left_img': left,
-    'right_img': right,
-    'user': request.user,
-    }
-  return render_to_response('choices.html', context, context_instance = RequestContext(request))
+##def choices(request, project):
+##  project_name = str(project).replace('%20',' ')
+##  project =  Project.objects.get(name=project_name)
+##  images = [image.img for image in project.images.all()]
+##  left, right = random.sample(images, 2)
+##  context = {
+##    'Project': project,
+##    'left_img': left,
+##    'right_img': right,
+##    'user': request.user,
+##    }
+##  return render_to_response('choices.html', context, context_instance = RequestContext(request))
 
+def isUnique(matrix, pair):
+  for p in matrix:
+    print "testing..."
+    if (p[0]==pair[0] and p[1]==pair[1]) or (p[1]==pair[0] and p[0]==pair[1]):
+      print "it's not unique!"
+      return False
+  return True
 
 def rank(request, project): 
   project_name = str(project)
   project =  Project.objects.get(name=project_name)
   images = [image.img for image in project.images.all()]
-  left, right = random.sample(images, 2)
+  
   n = len(images)
   k = 2
   nCr = lambda n,k: int(round(
@@ -69,12 +74,25 @@ def rank(request, project):
     ))
   max_limit = 10
   limit = min(nCr(n,k), max_limit)
-  print limit
+  pairs = []
+  for i in range(limit):
+    print "in big for loop"
+    left, right = random.sample(images, 2)
+    pair = [left, right]
+    while isUnique(pairs, pair)!= True:
+      print "in while loop"
+      left, right = random.sample(images, 2)
+      pair = [left, right]
+    pairs.append(pair)
+    print i
+      
+  print pairs
   context = {
     'Project': project,
-    'left_img': left,
-    'right_img': right,
+##    'left_img': left,
+##    'right_img': right,
     'limit': limit,
+    'img_list': pairs,
     'user': request.user,
     }
   return render_to_response('rank.html',context, context_instance = RequestContext(request))
@@ -93,10 +111,8 @@ def vote(request):
     loser = l,
     time = datetime.datetime.now()
     )
-  print "moo"
   vote.save()
-
-  return HttpResponse()
+  return HttpResponse('boo!')
 
 def thanks(request, project):
   project_name = str(project)#.replace('%20', ' ')

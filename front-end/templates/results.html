@@ -13,7 +13,8 @@
       <div class="rankbox choose">
         <img src="front-end/media/{{ image.img }}" class="rankpic choose"/>
       </div>
-      <p style="text-align:center;">Votes for: {{ image.winvotes.count }}</p>  
+      <p style="text-align:left; margin-left:35px;">Votes for: {{ image.winvotes.count }} 
+      <br />Votes against: {{ image.losevotes.count }}</p>
     </td>
     {% endfor %}
   </tr>

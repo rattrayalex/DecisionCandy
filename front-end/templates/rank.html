@@ -6,8 +6,10 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="../../front-end/media/static/ajax-thing.js"></script>
 <script type="text/javascript">
-  var progress = 0;
+  var progress = 1;
   var project = "{{ Project.name|escapejs }}";
+  var pairs = new Array(limit);
+
   
   var limit = '{{ limit }}';
   function vote(w, l){
@@ -21,7 +23,7 @@
 	  	},
 		function(data, status, xhr){
 			if (status == 'success'){
-				updateList('y');
+				updateList();
 			}
 			else { 
 				alert("something went wrong");
@@ -29,7 +31,7 @@
 		}
 		);
 
-	  //updateList('y');
+	  //updateList();
   }
   
 //  var pairs = new Array(limit);
@@ -38,14 +40,20 @@
 //	  
 //  }
   
-  function updateList(q){
-    if (progress < limit) {
-		if (q != 'n') {
+  function updateList(){
+    if (progress <= limit) {
+//		  var url = "../../../choices/" + project.replace(' ','%20');
+//		  $("div#main").load(url);
+		$("div#progress").html(progress + " / " + limit);	
+		var left_url = pairs[progress - 1][0];
+		var right_url = pairs[progress - 1][1];
+		$("img#left_img").attr("src", "/front-end/media/" + left_url);
+		$("img#right_img").attr("src", "/front-end/media/" + right_url);
+		$("a#left_link").unbind('click');
+		$("a#right_link").unbind('click');
+		$("a#left_link").click(function(){vote(left_url, right_url)});
+		$("a#right_link").click(function(){vote(right_url, left_url)});
 		  progress += 1;
-		}
-		  var url = "../../../choices/" + project.replace(' ','%20');
-		  $("div#main").load(url);
-		  $("div#progress").html(progress + " / " + limit);	  
     }
     else {
       var url = "../../../thanks/"+ project.replace(' ','%20');
@@ -54,12 +62,15 @@
   }
 
 $(document).ready(function() {
-//	for (i=0; i < limit; i++) {
-//	  pairs[i] = new Array(2);
-//	  pairs[i][0]="";
-//	  pairs[i][1]="";
-//	  }
-    updateList('y');
+  
+ 	{% for pair in img_list %}
+	pairs[{{ forloop.counter0 }}] = new Array(2);
+  		{% for img in pair %}
+			pairs[{{ forloop.parentloop.counter0 }}][{{ forloop.counter0 }}]="{{ img }}";
+		{% endfor %}
+	{% endfor %}
+
+    updateList();
     });
   </script>
   {% endblock %}
@@ -86,6 +97,27 @@ $(document).ready(function() {
   </div>
 
   <div id="main">
+      <div class="ranking" id="mainranking">
+        <a href="#" onclick="" id="left_link">{% csrf_token %}
+          <div class="rankbox left">
+	          <img id="left_img" src='front-end/media/{{ left_img }}' class="rankpic"/>
+          </div>
+        </a>
+        <a href="#" onclick="updateList()" id="cantdecide">
+            <div class="rankbuttons">
+              <div class="indecisive">Can't decide.</div>
+            </div>
+        </a>
+        <a href="#" onclick="" id="right_link">{% csrf_token %}
+            <div class="rankbox right" id="rb_r">
+              <img id="right_img" src='front-end/media/{{ right_img }}' class="rankpic"/>
+            </div>
+        </a>
+    </div>
+    
+    <div id="fake">
+    
+    </div>
   </div>
 
 
