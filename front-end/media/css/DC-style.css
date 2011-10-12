@@ -83,14 +83,17 @@ a:hover {
 	-moz-box-shadow: 0px 0px 10px #8FBCFF;
     -webkit-box-shadow: 0px 0px 10px #8FBCFF;
     box-shadow: 0px 0px 10px #8FBCFF;
-/*	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px; /* future proofing */
 	position:absolute;
         background-color:white;
 	/* background-image:url(images/whitey.png);	*/
 	/* border: 5px dashed #CCC;     */
 }
+
+/*.rankbox, img.rankpic {
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px; 
+}*/
 
 .rankbox {
 	width:300px;

@@ -18,11 +18,14 @@
 <body>
     {% block header %}
         <div class="topbar">
-            <a href="../../../">
-                <div class="bigtext" id="title">
-                    <span style="color:#8FBCFF;">Decision</span><span style="color:#FFC04F;">Candy</span>
-                </div>
-            </a>
+            
+            <div class="bigtext" id="title">
+            	<a href="../../../">
+                	<span style="color:#8FBCFF;">Decision</span><span style="color:#FFC04F;">Candy</span>
+                	<span style="color:#666; font-size:26px;">Truly Yummy Feedback.</span>
+            	</a>
+           	</div>
+            
             <div class="topbar-links bluetext">
             	{% if user.username %}
 	            	Welcome, {{ user.client.name }} | <a href="../../upload/">Upload a Project</a> | <a href="../../logout/">Logout</a>
