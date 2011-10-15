@@ -98,19 +98,19 @@ $(document).ready(function() {
 
   <div id="main">
       <div class="ranking" id="mainranking">
-        <a href="#" onclick="" id="left_link">{% csrf_token %}
+        <a onclick="" id="left_link">{% csrf_token %}
           <div class="rankbox left">
-	          <img id="left_img" src='front-end/media/{{ left_img }}' class="rankpic"/>
+	          <img id="left_img" src='' class="rankpic"/>
           </div>
         </a>
-        <a href="#" onclick="updateList()" id="cantdecide">
+        <a onclick="updateList()" id="cantdecide">
             <div class="rankbuttons">
               <div class="indecisive">Can't decide.</div>
             </div>
         </a>
-        <a href="#" onclick="" id="right_link">{% csrf_token %}
+        <a onclick="" id="right_link">{% csrf_token %}
             <div class="rankbox right" id="rb_r">
-              <img id="right_img" src='front-end/media/{{ right_img }}' class="rankpic"/>
+              <img id="right_img" src='' class="rankpic"/>
             </div>
         </a>
     </div>

@@ -146,25 +146,6 @@ class create_project(forms.Form):
 
 class upload_image_form(forms.Form):
   filename = forms.ImageField(label = "Image")
-
-def thumbify(infile, size, size_name):
-  name = infile.name.split(".", 1)[0] + "_" + size_name + ".PNG"
-  outfile = InMemoryUploadedFile(None, None, None, None, None, None)
-  outfile.name = name#copy.copy(infile)
-  print outfile
-##  outfile.name = outfile.name.split(".", 1)[0] + "_" + size_name + ".PNG"
-  print outfile.name
-  try:
-    im = IMG.open(infile, "r")
-    im.load()
-    im.thumbnail(size)
-    print im
-    im.save(outfile, "PNG")
-##    out = IMG.open(outfile, "r")
-##    print out
-    return outfile
-  except IOError:
-    print "cannot create thumbnail for ", outfile
   
 def upload_files(request):
   UploaderFormset = formset_factory(upload_image_form, extra=10)
@@ -191,11 +172,7 @@ def upload_files(request):
         for image in request.FILES:
           datapoint = 'form-%s-filename' % str(n)
           full = request.FILES[datapoint]
-##          large = thumbify(full, large_size, "large")
-##          medium = thumbify(full, medium_size, "medium")
-          i = Image(project=project,
-                    full=full#, large=large, medium=medium
-                    )
+          i = Image(project=project, full=full)
           i.save()
           n += 1
         return HttpResponseRedirect('../rank/'+ project.name.replace(' ', '%20'))

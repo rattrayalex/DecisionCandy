@@ -39,25 +39,18 @@ class Image(models.Model):
         if self.full and not self.large and not self.medium: 
             # We use PIL's Image object
             # Docs: http://www.pythonware.com/library/pil/handbook/image.htm
-            print self.full.name
             import Image as IMG
         
             # Set our max thumbnail size in a tuple (max width, max height)
             large_size = (330, 230)
             medium_size = (210, 150)
-        
-            # Save fake thumbnail as empty so we can get the filename from the 
-            # original filename, from Django's convenience method 
-            # get_FIELD_filename()
-##            self.save_large_file(self.get_full_filename(), '')
-##            self.save_medium_file(self.get_full_filename(), '')
-        
+
             # Open original photo which we want to thumbnail using PIL's Image
             # object
             media_root = os.path.join(os.path.dirname(__file__), '../front-end/media/').replace('\\','/')
             
-            large_image = IMG.open(media_root + self.full.name)#.split("/",1)[1])#get_full_filename())
-            medium_image = IMG.open(media_root + self.full.name)#get_full_filename())
+            large_image = IMG.open(media_root + self.full.name)
+            medium_image = IMG.open(media_root + self.full.name)
         
             # Convert to RGB if necessary
             # Thanks to Limodou on DjangoSnippets.org
@@ -77,16 +70,12 @@ class Image(models.Model):
             medium_name = 'medium_thumbs/' + self.full.name.split(".", 1)[0].split("/",1)[1] + ".PNG"#get_full_filename().split(".", 1)[0] + "_medium.PNG"
             print large_name, medium_name
             
-            # Save the thumbnail
+            # Save the thumbnail to the computer
             large_image.save(media_root + large_name)
             medium_image.save(media_root + medium_name)
-
+            # Save the thumbnail to the database
             self.large.name = large_name
             self.medium.name = medium_name
-##            self.save_large_file(large_name, large_image)
-##            self.save_medium_file(medium_name, medium_image)
-##            self.large.save(large_name, large_image)
-##            self.medium.save(medium_name, medium_image))
         
         # Save this photo instance      
         super(Image, self).save()
@@ -105,12 +94,8 @@ class UserProfile(models.Model):
 
 class Client(UserProfile):
     description = models.TextField()
-##    def create_client_profile(sender, instance, created, **kwargs):
-##      if created:
-##        Client.objects.create(user=instance)
-##
-##    post_save.connect(create_client_profile, sender=User)
-##    
+
+    
 class Minion(UserProfile):
     gender = models.CharField(max_length=1,choices=gender_choices)
     age = models.PositiveIntegerField(blank=True, null=True)
