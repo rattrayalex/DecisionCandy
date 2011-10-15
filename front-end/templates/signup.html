@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="frontcenter">
-        <form action="/signup/" method="post">{% csrf_token %}
+        <form action="/signup/" method="post" style="width:500px;">{% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit" />
         </form>

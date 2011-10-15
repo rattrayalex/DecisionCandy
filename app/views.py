@@ -10,10 +10,13 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.forms.formsets import formset_factory
-import datetime
 from operator import mul
+import Image as IMG
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from DecisionCandy.app.models import *
+
+import os, sys, datetime, copy
 
 
 ROW_WIDTH = 3
@@ -32,40 +35,18 @@ def index(request):
       }
   return render_to_response('index.html', context)
 
-
-##def choose(request):
-##  projects = Project.objects.all().order_by('name')
-##  context = {
-##      'project_table': divide(projects, ROW_WIDTH),
-##      'user': request.user,
-##      }
-##  return render_to_response('choose.html',context)
-
-##def choices(request, project):
-##  project_name = str(project).replace('%20',' ')
-##  project =  Project.objects.get(name=project_name)
-##  images = [image.img for image in project.images.all()]
-##  left, right = random.sample(images, 2)
-##  context = {
-##    'Project': project,
-##    'left_img': left,
-##    'right_img': right,
-##    'user': request.user,
-##    }
-##  return render_to_response('choices.html', context, context_instance = RequestContext(request))
-
 def isUnique(matrix, pair):
   for p in matrix:
-    print "testing..."
+##    print "testing..."
     if (p[0]==pair[0] and p[1]==pair[1]) or (p[1]==pair[0] and p[0]==pair[1]):
-      print "it's not unique!"
+##      print "it's not unique!"
       return False
   return True
 
 def rank(request, project): 
   project_name = str(project)
   project =  Project.objects.get(name=project_name)
-  images = [image.img for image in project.images.all()]
+  images = [image.large for image in project.images.all()]
   
   n = len(images)
   k = 2
@@ -76,17 +57,17 @@ def rank(request, project):
   limit = min(nCr(n,k), max_limit)
   pairs = []
   for i in range(limit):
-    print "in big for loop"
+##    print "in big for loop"
     left, right = random.sample(images, 2)
     pair = [left, right]
     while isUnique(pairs, pair)!= True:
-      print "in while loop"
+##      print "in while loop"
       left, right = random.sample(images, 2)
       pair = [left, right]
     pairs.append(pair)
-    print i
+##    print i
       
-  print pairs
+##  print pairs
   context = {
     'Project': project,
 ##    'left_img': left,
@@ -103,8 +84,8 @@ def vote(request):
   if request.method == 'POST':
     data = request.POST
     print data
-    w = Image.objects.get(img__exact=data['winner'])
-    l = Image.objects.get(img__exact=data['loser'])
+    w = Image.objects.get(large__exact=data['winner'])
+    l = Image.objects.get(large__exact=data['loser'])
     print w, l
     vote = Vote(
     winner = w,
@@ -157,14 +138,6 @@ def signup(request):
     form = SignUpForm()
   return render_to_response('signup.html', {'form':form,}, context_instance = RequestContext(request))
 
-##class create_project(ModelForm):
-##  class Meta:
-##    model = Project
-##
-##class upload_image_form(ModelForm):
-##  class Meta:
-##    model = Image
-
 class create_project(forms.Form):
   name = forms.CharField(max_length=100, label="Project Name")
   description = forms.CharField(widget=forms.Textarea, label="A description of your project")
@@ -172,17 +145,32 @@ class create_project(forms.Form):
   more_criteria = forms.CharField(widget=forms.Textarea, label="More Criteria (what else is important?)")
 
 class upload_image_form(forms.Form):
-  filename = forms.ImageField(label = "Image")#upload_to='user_files')
-##  for form in formset.forms:
-##      form.save()
+  filename = forms.ImageField(label = "Image")
+
+def thumbify(infile, size, size_name):
+  name = infile.name.split(".", 1)[0] + "_" + size_name + ".PNG"
+  outfile = InMemoryUploadedFile(None, None, None, None, None, None)
+  outfile.name = name#copy.copy(infile)
+  print outfile
+##  outfile.name = outfile.name.split(".", 1)[0] + "_" + size_name + ".PNG"
+  print outfile.name
+  try:
+    im = IMG.open(infile, "r")
+    im.load()
+    im.thumbnail(size)
+    print im
+    im.save(outfile, "PNG")
+##    out = IMG.open(outfile, "r")
+##    print out
+    return outfile
+  except IOError:
+    print "cannot create thumbnail for ", outfile
   
 def upload_files(request):
   UploaderFormset = formset_factory(upload_image_form, extra=10)
   if request.method == 'POST':
     image_form = UploaderFormset(request.POST, request.FILES)
     project_form = create_project(request.POST)
-    print len(request.FILES)
-##    image_form = upload_image_form(request.POST)
     if image_form.is_valid() and project_form.is_valid():
       if len(request.FILES) < 2:
         return HttpResponse('Upload more pix!')
@@ -197,17 +185,22 @@ def upload_files(request):
           )
         new_project.save()
         n = 0
+        large_size = 330, 230
+        medium_size = 210, 150
         project = Project.objects.get(name=project_form.cleaned_data['name'])
         for image in request.FILES:
           datapoint = 'form-%s-filename' % str(n)
+          full = request.FILES[datapoint]
+##          large = thumbify(full, large_size, "large")
+##          medium = thumbify(full, medium_size, "medium")
           i = Image(project=project,
-                    img = request.FILES[datapoint])
+                    full=full#, large=large, medium=medium
+                    )
           i.save()
           n += 1
         return HttpResponseRedirect('../rank/'+ project.name.replace(' ', '%20'))
   else:
       project_form = create_project()
-##      image_form = upload_image_form()
       image_form = UploaderFormset()
   context = {
     'project_form': project_form,
@@ -219,10 +212,9 @@ def upload_files(request):
 class SignInForm(forms.Form):
   email = forms.CharField(max_length=100)
   password = forms.CharField(widget=forms.PasswordInput)
-
 def signin(request): 
   if request.method == 'POST':
-    print "in signin post"
+##    print "in signin post"
     form = SignInForm(request.POST)
     if form.is_valid():
       email = form.cleaned_data['email']
@@ -234,9 +226,9 @@ def signin(request):
       else:
         return HttpResponseRedirect('/signin/')
   else:
-    print "in signin else"
+##    print "in signin else"
     form = SignInForm() 
-  print "in signin "
+##  print "in signin "
   return render_to_response('signin.html', {'form': form, 'user': request.user,},context_instance=RequestContext(request))
 
 def loggedin(request):
