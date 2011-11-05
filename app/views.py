@@ -53,7 +53,7 @@ def rank(request, project):
   nCr = lambda n,k: int(round(
     reduce(mul, (float(n-i)/(i+1) for i in range(k)), 1)
     ))
-  max_limit = 10
+  max_limit = 5
   limit = min(nCr(n,k), max_limit)
   pairs = []
   for i in range(limit):
@@ -70,8 +70,6 @@ def rank(request, project):
 ##  print pairs
   context = {
     'Project': project,
-##    'left_img': left,
-##    'right_img': right,
     'limit': limit,
     'img_list': pairs,
     'user': request.user,

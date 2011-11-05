@@ -40,6 +40,7 @@ a:hover {
 	background-image:url(../images/old_mathematics_3.png);
 	-webkit-box-shadow:0px 2px 15px #999;
 	box-shadow:0px 2px 15px #999;
+	background: #434950 url(../images/sharkskin.gif) repeat-x -70% 0;
 
 }
 
@@ -223,6 +224,9 @@ td .rankbox{
 	margin: 15px;
 	}
 	
+.handcursor {
+	cursor:pointer;
+}
 /*div.frontcenter form table tbody tr th {
 	text-align:right;
 }
