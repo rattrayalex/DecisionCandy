@@ -1,1 +1,1 @@
-By Alex Rattray, Greg Terrono, and Ceasar Bautista
+By Alex Rattray, Greg Terrono, and Caesar Bautista
